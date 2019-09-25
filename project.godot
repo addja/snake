@@ -19,6 +19,12 @@ config/name="snake"
 run/main_scene="res://Game/Game.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=500
+window/size/height=500
+window/size/resizable=false
+
 [rendering]
 
 quality/driver/driver_name="GLES2"
