@@ -1,9 +1,9 @@
 # snake
 Snake game made with Godot game engine
 
-## Run
-`cd snake/bin`
+## Play
+- Click on the screen to activate input
+- Use arrow keys to move
+- [Have fun](http://addja.github.io/bin/snake/snake.html)
 
-`python -m http.server 2000`
 
-in your browser go to `localhost:2000/snake.html`

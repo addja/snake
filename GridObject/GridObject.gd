@@ -2,13 +2,13 @@ extends Sprite
 
 class_name GridObject
 
-## Attributes.
+# Attributes.
 var spriteOffset = Vector2( 0, 0 )
 var spriteScale = Vector2( 0, 0 )
 var tiledPosition = Vector2( 0, 0 )
 var tiles = Vector2( 0, 0 )
 
-## Functions.
+# Functions.
 func coord_to_position():
 	tiledPosition = wrap_map( tiledPosition )
 	position = tiledPosition * spriteScale + spriteOffset
@@ -22,8 +22,8 @@ func prepare_sprite():
 	self.set_scale( spriteScale / self.get_texture().get_size() )
 	spriteOffset = spriteScale / 2
 
-func starting_position( x, y ):
-	tiledPosition = Vector2( x, y )
+func starting_position( coord ):
+	tiledPosition = coord
 
 func wrap_map( pos ):
 	if pos.x >= tiles.x:
@@ -35,7 +35,7 @@ func wrap_map( pos ):
 	elif pos.y < 0:
 		pos.y = tiles.y - 1
 	return pos
-	
+
 func _ready():
 	prepare_sprite()
 	coord_to_position()
