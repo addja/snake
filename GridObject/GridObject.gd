@@ -3,38 +3,32 @@ extends Sprite
 class_name GridObject
 
 # Attributes.
+var coord = Vector2( 0, 0 )
+var grid = Vector2( 0, 0 )
 var spriteOffset = Vector2( 0, 0 )
 var spriteScale = Vector2( 0, 0 )
-var tiledPosition = Vector2( 0, 0 )
-var tiles = Vector2( 0, 0 )
 
 # Functions.
 func coord_to_position():
-	tiledPosition = wrap_map( tiledPosition )
-	position = tiledPosition * spriteScale + spriteOffset
-
-func grid( tilesX, tilesY ):
-	tiles = Vector2( tilesX, tilesY )
+	coord = wrap_map()
+	position = coord * spriteScale + spriteOffset
 
 func prepare_sprite():
-	spriteScale = Vector2( self.get_viewport().get_visible_rect().size.x / tiles.x,
-		self.get_viewport().get_visible_rect().size.y / tiles.y )
+	spriteScale = Vector2( self.get_viewport().get_visible_rect().size.x / grid.x,
+						   self.get_viewport().get_visible_rect().size.y / grid.y )
 	self.set_scale( spriteScale / self.get_texture().get_size() )
 	spriteOffset = spriteScale / 2
 
-func starting_position( coord ):
-	tiledPosition = coord
-
-func wrap_map( pos ):
-	if pos.x >= tiles.x:
-		pos.x = 0
-	elif pos.x < 0:
-		pos.x = tiles.x - 1
-	if pos.y >= tiles.y:
-		pos.y = 0
-	elif pos.y < 0:
-		pos.y = tiles.y - 1
-	return pos
+func wrap_map():
+	if coord.x >= grid.x:
+		coord.x = 0
+	elif coord.x < 0:
+		coord.x = grid.x - 1
+	if coord.y >= grid.y:
+		coord.y = 0
+	elif coord.y < 0:
+		coord.y = grid.y - 1
+	return coord
 
 func _ready():
 	prepare_sprite()

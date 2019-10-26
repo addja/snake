@@ -1,23 +1,36 @@
 extends GridObject
 
 # Attributes.
-var snakeAte = false
+var head = false
+var eaten = false
+var oldStep = Vector2( -2, -2 )
 var snakeTexture = preload( "res://Assets/Snake.png" )
 var snakeAppleTexture = preload( "res://Assets/SnakeAteApple.png" )
 var step = Vector2( 0, 0 )
 
 # Functions.
-func grow():
-	snakeAte = true
+func eat():
+	eaten = true
 	texture = snakeAppleTexture
-	# TODO make snake grow
+
+func follow():
+	coord_to_position()
 
 func move():
-	tiledPosition += step
-	coord_to_position()
-	if snakeAte:
-		snakeAte = false
+	coord += step
+	oldStep = step
+	follow()
+
+func end_eat():
+		eaten = false
 		texture = snakeTexture
+	
+func new_snake( coord, grid ):
+	var snake = get_script().new()
+	snake.grid = grid
+	snake.coord = coord
+	snake.position = position
+	return snake
 
 func player_step():
 	var movement = Vector2( 0, 0 )
@@ -36,7 +49,8 @@ func _init():
 	texture = snakeTexture  # This cannot be in the parent class
 
 func _process( delta ):
-	player_step()
+	if head:
+		player_step()
 	
 func _ready():
 	step = Vector2( 1, 0 )
