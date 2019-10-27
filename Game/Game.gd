@@ -17,12 +17,14 @@ func free_position():
 	for i in range( grid.x ):
 		for j in range( grid.y ):
 			free.append( Vector2( i, j ) )
+	var indexToRemove = []
 	for piece in snake:
-		free.remove( piece.coord.x * grid.x + piece.coord.y )
-		print( piece.coord )
-	print( free )
+		indexToRemove.append( int( piece.coord.x * grid.x + piece.coord.y ) )
+	indexToRemove.sort()
+	indexToRemove.invert()
+	for i in indexToRemove:
+		free.remove( i )
 	return free[ randi() % free.size() ]
-	# TODO compute free positions and get one
 
 func game_over():
 	for n in get_children():
